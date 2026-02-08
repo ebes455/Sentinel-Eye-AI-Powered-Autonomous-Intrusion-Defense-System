@@ -38,12 +38,12 @@ export class LiveFeed {
 
         let meta = {};
         try {
-            meta = typeof threat.metadata === 'string' ? JSON.parse(threat.metadata) : threat.metadata;
-        } catch (e) { meta = threat.metadata || {}; }
+            meta = typeof threat.metadata === 'string' ? JSON.parse(threat.metadata) : (threat.metadata || {});
+        } catch (e) { meta = {}; }
 
         div.className = `threat-item p-4 mb-3 border-l-4 ${riskClass} bg-slate-900/80 backdrop-blur-sm relative group overflow-hidden`;
 
-        const ipsLabel = meta.ips_action === 'BLOCKED'
+        const ipsLabel = (meta && meta.ips_action === 'BLOCKED')
             ? '<span class="px-2 py-0.5 bg-red-600 text-[9px] font-bold rounded text-white shadow-[0_0_10px_#ef4444]">BLOCKED</span>'
             : '<span class="px-2 py-0.5 bg-blue-600/20 text-[9px] rounded text-blue-400 font-bold border border-blue-500/30">MONITOR</span>';
 

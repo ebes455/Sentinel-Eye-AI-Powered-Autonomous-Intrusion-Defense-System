@@ -44,29 +44,38 @@ class SentinelApp {
 
     async loadInitialThreats() {
         try {
-            const host = window.location.hostname;
-            const response = await fetch(`http://${host}:8000/api/threats/recent?limit=50`);
+            const host = window.location.hostname || 'localhost';
+            const url = `http://${host}:8000/api/threats/recent?limit=50`;
+            console.log('🔍 Fetching threats from:', url);
+            const response = await fetch(url);
             const data = await response.json();
+            console.log('📦 API Response:', data);
 
             if (data.success && data.threats) {
+                console.log(`✅ Found ${data.threats.length} threats`);
                 const newThreats = data.threats.filter(newT =>
                     !this.threats.some(oldT => oldT.id === newT.id)
                 );
 
                 if (newThreats.length > 0) {
+                    console.log(`➕ Adding ${newThreats.length} new threats to UI`);
                     newThreats.reverse().forEach(threat => {
+                        console.log('Adding threat:', threat);
                         this.processThreat(threat, true);
                     });
                     this.updateStatsDisplay();
                 }
             }
-        } catch (error) { }
+        } catch (error) {
+            console.error('❌ Error loading threats:', error);
+        }
     }
 
     connectWebSocket() {
         try {
             window.Pusher = Pusher;
-            const host = window.location.hostname;
+            const host = window.location.hostname || 'localhost';
+            console.log('🔌 Connecting WebSocket to:', host + ':8080');
             this.echo = new Echo({
                 broadcaster: 'reverb',
                 key: 'fjckmzfvrypjgi35drx1',
@@ -78,12 +87,15 @@ class SentinelApp {
 
             this.echo.channel('threats')
                 .listen('.threat.detected', (event) => {
+                    console.log('🚨 WebSocket threat received:', event);
                     this.processThreat(event, true);
                     this.playAlertSound();
                 });
 
+            console.log('✅ WebSocket connected successfully');
             this.updateConnectionStatus(true);
         } catch (error) {
+            console.error('❌ WebSocket connection failed:', error);
             this.updateConnectionStatus(false);
             setTimeout(() => this.connectWebSocket(), 5000);
         }
@@ -220,7 +232,7 @@ All high-risk vectors have been successfully neutralized via the Sentinel-IPS Au
     }
 
     fetchStats() {
-        const host = window.location.hostname;
+        const host = window.location.hostname || 'localhost';
         fetch(`http://${host}:8000/api/threats/stats`)
             .then(r => r.json())
             .then(data => {
