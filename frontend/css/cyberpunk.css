@@ -1,0 +1,442 @@
+/* Sentinel-Eye Cyberpunk Theme */
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    background: #0f172a;
+    color: #22c55e;
+    position: relative;
+}
+
+/* Scanline Animation */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(0deg,
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.15) 1px,
+            transparent 1px,
+            transparent 2px);
+    pointer-events: none;
+    animation: scanline 8s linear infinite;
+    opacity: 0.05;
+    z-index: 9999;
+}
+
+@keyframes scanline {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(100vh);
+    }
+}
+
+/* Neon Text Effect */
+.neon-text {
+    font-family: 'Orbitron', sans-serif;
+    color: #22c55e;
+    text-shadow:
+        0 0 5px #22c55e,
+        0 0 10px #22c55e,
+        0 0 20px #22c55e,
+        0 0 40px #059669;
+}
+
+/* Cyberpunk Panel */
+.cyberpunk-panel {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.8));
+    border: 2px solid #22c55e;
+    border-radius: 8px;
+    box-shadow:
+        0 0 10px rgba(34, 197, 94, 0.3),
+        inset 0 0 20px rgba(34, 197, 94, 0.05);
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+.cyberpunk-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent,
+            #22c55e 50%,
+            transparent);
+    animation: borderGlow 2s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Panel Header */
+.panel-header {
+    background: linear-gradient(90deg, #166534, #15803d);
+    border-bottom: 1px solid #22c55e;
+    padding: 12px 16px;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Status Indicator */
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid #22c55e;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.status-dot.bg-green-500 {
+    background: #22c55e;
+    box-shadow: 0 0 10px #22c55e;
+}
+
+.status-dot.bg-gray-500 {
+    background: #6b7280;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Threat Feed Item */
+.threat-item {
+    background: rgba(15, 23, 42, 0.6);
+    border-left: 4px solid #22c55e;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 1.5;
+    animation: slideIn 0.3s ease-out;
+    transition: all 0.2s;
+}
+
+.threat-item:hover {
+    background: rgba(30, 41, 59, 0.8);
+    transform: translateX(4px);
+}
+
+.threat-item.risk-low {
+    border-left-color: #22c55e;
+}
+
+.threat-item.risk-medium {
+    border-left-color: #eab308;
+}
+
+.threat-item.risk-high {
+    border-left-color: #ef4444;
+    animation: slideIn 0.3s ease-out, dangerPulse 1s ease-in-out 3;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes dangerPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 rgba(239, 68, 68, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+    }
+}
+
+/* Threat Timestamp */
+.threat-time {
+    color: #6b7280;
+    font-size: 10px;
+}
+
+/* Threat IP */
+.threat-ip {
+    color: #22c55e;
+    font-weight: 700;
+}
+
+/* Threat Signature */
+.threat-signature {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+/* Risk Score Badge */
+.risk-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.risk-badge.low {
+    background: #22c55e;
+    color: #0f172a;
+}
+
+.risk-badge.medium {
+    background: #eab308;
+    color: #0f172a;
+}
+
+.risk-badge.high {
+    background: #ef4444;
+    color: #fff;
+}
+
+/* Leaflet Map Customization */
+#map {
+    background: #0f172a;
+    filter: saturate(1.4) brightness(0.9);
+}
+
+.leaflet-container {
+    background: #0f172a;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #22c55e;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #16a34a;
+}
+
+/* Chart Customization */
+canvas {
+    filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.2));
+}
+
+/* Risk Levels */
+.high-risk {
+    border-left-color: #ef4444 !important;
+    box-shadow: inset 5px 0 10px -5px #ef4444;
+}
+
+.med-risk {
+    border-left-color: #f59e0b !important;
+}
+
+.low-risk {
+    border-left-color: #22c55e !important;
+}
+
+/* Block Button */
+.btn-block-threat {
+    background: transparent;
+    border: 1px solid var(--neon-red);
+    color: var(--neon-red);
+    font-size: 9px;
+    font-weight: bold;
+    padding: 2px 8px;
+    text-transform: uppercase;
+    transition: all 0.2s;
+}
+
+.btn-block-threat:hover {
+    background: var(--neon-red);
+    color: white;
+    box-shadow: 0 0 10px var(--neon-red);
+}
+
+/* Under Siege Animation */
+.under-siege {
+    background: rgba(239, 68, 68, 0.2) !important;
+    border-color: #ef4444 !important;
+    animation: siege-flash 1s infinite alternate;
+}
+
+.under-siege #targetStatusText {
+    color: #ffffff !important;
+}
+
+@keyframes siege-flash {
+    from {
+        box-shadow: 0 0 5px #ef4444;
+    }
+
+    to {
+        box-shadow: 0 0 20px #ef4444;
+    }
+}
+
+/* Status Pulse */
+.status-pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 5px rgba(34, 197, 94, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+
+/* Custom Scrollbar for Forensics */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #000;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #22c55e;
+    border-radius: 10px;
+}
+
+/* Responsive */
+@media (max-width: 1536px) {
+    .grid-cols-12 {
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 1024px) {
+    .grid-cols-12 {
+        grid-template-columns: 1fr;
+    }
+
+    .col-span-4,
+    .col-span-5,
+    .col-span-3 {
+        grid-column: span 12;
+    }
+
+    main {
+        height: auto !important;
+    }
+}
+
+/* Loading Animation */
+.loading {
+    position: relative;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;
+    border: 4px solid rgba(34, 197, 94, 0.2);
+    border-top-color: #22c55e;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+:root {
+    --toxic-green: #22c55e;
+    --neon-red: #ff3e3e;
+    --deep-slate: #0a0f18;
+    --console-glow: rgba(34, 197, 94, 0.15);
+}
+
+body {
+    background-color: var(--deep-slate);
+    color: #e2e8f0;
+    font-family: 'Outfit', sans-serif;
+    overflow: hidden;
+    position: relative;
+}
+
+/* CRT Scane Line / Vignette Effect */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.4) 100%),
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    background-size: 100% 100%, 100% 2px, 3px 100%;
+    pointer-events: none;
+    z-index: 99;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

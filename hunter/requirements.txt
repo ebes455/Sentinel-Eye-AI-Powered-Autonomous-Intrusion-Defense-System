@@ -1,0 +1,6 @@
+scapy>=2.5.0
+requests>=2.31.0
+python-dotenv>=1.0.0
+psutil>=5.9.5
+# For real Gemini AI integration (optional)
+# google-generativeai>=0.3.0
